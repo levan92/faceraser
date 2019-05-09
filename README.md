@@ -1,5 +1,5 @@
 # facemoji
-simple tool to erase/censor/anonymise faces
+simple python3 tool to erase/censor/anonymise faces
 
 ## Usage
 Quick start:

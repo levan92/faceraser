@@ -5,12 +5,10 @@ simple tool to erase faces
 Quick start:
 `python3 run.py [path to directory of images]`
 
-- any button to proceed
-- `d` to draw noise manually 
-- `q` to quit
-
-## TODO
-- [ ] Properly output drawn images to somewhere
+1. Goes through each image in your directory
+2. Face detection is done and face ellipse is censored with random noise
+3. Press `d` to draw noise manually 
+4. Press `q` to quit
 
 ## My Stack
 - CUDA 9.0
@@ -22,3 +20,5 @@ Quick start:
 
 ## Acknowledgments
 - [dlib](http://dlib.net/)
+
+## TODO

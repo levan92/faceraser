@@ -14,9 +14,9 @@ Quick start:
 - CUDA 9.0
 - cudnn 7.4.2
 - cv2 v3.4.0
-- dlib==19.9.99 
-<!-- - tensorflow-gpu==1.13.1 -->
+- tensorflow-gpu==1.13.1
 <!-- - keras==2.1.3 -->
+<!-- - dlib==19.9.99  -->
 
 ## Acknowledgments
 - [dlib](http://dlib.net/)

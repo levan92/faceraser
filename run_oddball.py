@@ -12,12 +12,12 @@ from tqdm import tqdm
 from utils.shower import Shower
 from utils.noise_drawer import noiser
 from utils.noise_face import noise_face
-from faceDet.mobnet_dlib import Mobnet_FD as FaceDet
+from faceDet.mobnet import Mobnet_FD as FaceDet
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('cen_images', help='Directory for censored images', type=str)
-parser.add_argument('dir_images', help='Filepath to directory of images to censor', type=str)
+parser.add_argument('cen_images', help='Directory for directory of censored images (AKA Parent Dir of Pose)', type=str)
+parser.add_argument('dir_images', help='Filepath to directory of images to censor (AKA the actual pose Dir)', type=str)
 args = parser.parse_args()
 
 assert os.path.isdir(args.dir_images),'dir given is not a directory!'

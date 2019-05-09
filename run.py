@@ -12,7 +12,7 @@ from tqdm import tqdm
 from utils.shower import Shower
 from utils.noise_drawer import noiser
 from utils.noise_face import noise_face
-from faceDet.mobnet_dlib import Mobnet_FD as FaceDet
+from faceDet.mobnet import Mobnet_FD as FaceDet
 
 
 parser = argparse.ArgumentParser()

@@ -59,7 +59,7 @@ def noiser(frame, shower, radius=10):
     mouse_pt = None
     click = None
     start_click = None
-    window_name = 'Draw BB'
+    window_name = 'Draw NOISE'
     conf = None
     frame_size = frame.shape[:2]
     shower.start(window_name)
@@ -77,11 +77,7 @@ def noiser(frame, shower, radius=10):
         elif key == ord('c'):
             res = None
             break
-    # mouse_pt = None
-    # click = None
-    # start_click = None
-    # stored_rect_pts = None
-    # cv2.destroyAllWindows()
+    cv2.destroyWindow(window_name)
     return res
 
 if __name__ == '__main__':

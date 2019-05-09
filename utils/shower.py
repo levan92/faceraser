@@ -19,7 +19,7 @@ class Shower(object):
             w_scale = self.win_size[0]/frame_w
         if frame_h > self.win_size[1]:
             h_scale = self.win_size[1]/frame_h
-        # scale = 1
+        scale = 1
         scale = min(w_scale, h_scale)
         w = max( int(frame_w * scale), self.min_size[0] )
         h = max( int(frame_h * scale), self.min_size[1] )

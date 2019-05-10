@@ -20,3 +20,6 @@ Quick start:
 - [tensorflow implementation of Mobilenet-SSD face detection](https://github.com/yeephycho/tensorflow-face-detection)
 
 ## TODO
+-[ ] sort listdir and introduce cache for returning to progress
+-[ ] back button
+-[ ] undo auto FD

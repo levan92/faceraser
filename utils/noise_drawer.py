@@ -51,14 +51,14 @@ def get_points_in_circle(frameDC, frameSHOW, center, radius, frame_size, mode='b
         for _ in range(blurreps):
             cropBlurDC = blur_crop(frameDC,start_y,end_y,start_x,end_x)
             cropBlurSHOW = blur_crop(frameSHOW,start_y,end_y,start_x,end_x)
-
-            for x in range(start_x, end_x+1):
-                for y in range(start_y, end_y+1):
-                    dist = math.sqrt( (x - center[0])**2 + (y - center[1])**2 )
-                    if dist > radius:
-                        continue
-                    frameDC[y,x] = cropBlurDC[y-start_y,x-start_x]
-                    frameSHOW[y,x] = cropBlurSHOW[y-start_y,x-start_x]
+            if cropBlurSHOW is not None:
+                for x in range(start_x, end_x+1):
+                    for y in range(start_y, end_y+1):
+                        dist = math.sqrt( (x - center[0])**2 + (y - center[1])**2 )
+                        if dist > radius:
+                            continue
+                        frameDC[y,x] = cropBlurDC[y-start_y,x-start_x]
+                        frameSHOW[y,x] = cropBlurSHOW[y-start_y,x-start_x]
 
 def process(frameDC, frameSHOW, radius, frame_size):
     global start_click, click

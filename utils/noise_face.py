@@ -32,8 +32,9 @@ def noise_face(frame, face_bb, thresh = 0.7, mode='blur',blurreps=20):
     else:
         for _ in range(blurreps):
             cropBlur = blur_crop(frame,start_y,end_y,start_x,end_x)
-            for x in range(start_x, end_x):
-                for y in range(start_y, end_y):
-                    if not in_ellipse(x, y, cx, cy, rx, ry):
-                        continue
-                    frame[y,x] = cropBlur[y-start_y,x-start_x]
+            if cropBlur is not None:
+                for x in range(start_x, end_x):
+                    for y in range(start_y, end_y):
+                        if not in_ellipse(x, y, cx, cy, rx, ry):
+                            continue
+                        frame[y,x] = cropBlur[y-start_y,x-start_x]

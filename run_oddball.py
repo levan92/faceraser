@@ -38,21 +38,34 @@ faceDet = FaceDet(threshold=0.1)
 
 shower = Shower()
 show_title = 'Quell the faces!'
-shower.start(show_title)
-for img_path in img_paths:
+display_title=show_title
+shower.start(display_title)
+frame_count = 0
+
+while frame_count < len(img_paths):
+    img_path = img_paths[frame_count]
     img = cv2.imread(img_path)
 
     bbs = faceDet.detect_bb(img)
     for bb in bbs:
         noise_face(img, bb, thresh = 0.7)
-    shower.show(show_title, img)
+    cv2.destroyWindow(display_title)
+    display_title=show_title+'\t'+args.folder_name+'\t'+str(frame_count+1)+' of '+str(total_num)
+    shower.start(display_title)
+    shower.show(display_title, img)
     key = cv2.waitKey(0) 
     if key == ord('q'):
+        print('Quitting')
         break
     elif key == ord('d'):
         img = noiser(img, shower, radius=5)
-    
+    elif key == ord('b'): #go back
+        frame_count=max(frame_count-1,0)
+        continue
+
+    frame_count+=1
     dst_fp = os.path.join( pose_path , os.path.basename(img_path) )
     cv2.imwrite(dst_fp, img)
 
+print('\nuwu... bye bye')
 cv2.destroyAllWindows()

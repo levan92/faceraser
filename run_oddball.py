@@ -26,6 +26,7 @@ for images in os.listdir(args.dir_images):
     img_paths.append(os.path.join(args.dir_images, images))
 print('{} images in all'.format(len(img_paths)))
 
+folder_name=args.dir_images.split('/')[-1]
 pose = os.path.basename(args.dir_images)
 if not os.path.exists( args.cen_images ):
     os.makedirs( args.cen_images )
@@ -50,7 +51,7 @@ while frame_count < len(img_paths):
     for bb in bbs:
         noise_face(img, bb, thresh = 0.7)
     cv2.destroyWindow(display_title)
-    display_title=show_title+'\t'+args.folder_name+'\t'+str(frame_count+1)+' of '+str(total_num)
+    display_title=show_title+'\t'+folder_name+'\t'+str(frame_count+1)+' of '+str(total_num)
     shower.start(display_title)
     shower.show(display_title, img)
     key = cv2.waitKey(0) 

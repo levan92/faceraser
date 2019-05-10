@@ -30,7 +30,7 @@ def draw_crosshair(frameDC, radius=10):
     else:
         return frameDC
 
-def get_points_in_circle(frameDC, frameSHOW, center, radius, frame_size, mode='blur'):
+def get_points_in_circle(frameDC, frameSHOW, center, radius, frame_size, mode='blur', blurreps=10):
     # y = np.arange(frame_size[0])
     # x = np.arange(frame_size[1])
     # mask = (x[np.newaxis,:]-center[0])**2 + (y[:,np.newaxis]-center[1])**2 < radius**2
@@ -39,21 +39,26 @@ def get_points_in_circle(frameDC, frameSHOW, center, radius, frame_size, mode='b
     start_y = max(0, center[1] - radius)
     end_y = min(frame_size[0]-1, center[1] + radius)
 
-    if mode == 'blur':
-        cropBlurDC = blur_crop(frameDC,start_y,end_y,start_x,end_x)
-        cropBlurSHOW = blur_crop(frameSHOW,start_y,end_y,start_x,end_x)
-
-    for x in range(start_x, end_x+1):
-        for y in range(start_y, end_y+1):
-            dist = math.sqrt( (x - center[0])**2 + (y - center[1])**2 )
-            if dist > radius:
-                continue
-            if mode == 'blur':
-                frameDC[y,x] = cropBlurDC[y-start_y,x-start_x]
-                frameSHOW[y,x] = cropBlurSHOW[y-start_y,x-start_x]
-            else:
+    if mode != 'blur':
+        for x in range(start_x, end_x+1):
+            for y in range(start_y, end_y+1):
+                dist = math.sqrt( (x - center[0])**2 + (y - center[1])**2 )
+                if dist > radius:
+                    continue
                 frameDC[y,x] = np.random.uniform(0, 255, 3)
                 frameSHOW[y,x] = np.random.uniform(0, 255, 3)
+    else:
+        for _ in range(blurreps):
+            cropBlurDC = blur_crop(frameDC,start_y,end_y,start_x,end_x)
+            cropBlurSHOW = blur_crop(frameSHOW,start_y,end_y,start_x,end_x)
+
+            for x in range(start_x, end_x+1):
+                for y in range(start_y, end_y+1):
+                    dist = math.sqrt( (x - center[0])**2 + (y - center[1])**2 )
+                    if dist > radius:
+                        continue
+                    frameDC[y,x] = cropBlurDC[y-start_y,x-start_x]
+                    frameSHOW[y,x] = cropBlurSHOW[y-start_y,x-start_x]
 
 def process(frameDC, frameSHOW, radius, frame_size):
     global start_click, click

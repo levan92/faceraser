@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 
-kernel = np.ones((5,5),np.float32)/25
+k=10
+kernel = np.ones((k,k),np.float32)/(k**2)
 
 def blur_crop(frame, y0,y1,x0,x1):
 	if (y1 - y0) <= 0:

@@ -30,7 +30,7 @@ def draw_crosshair(frameDC, radius=10):
     else:
         return frameDC
 
-def get_points_in_circle(frameDC, frameSHOW, center, radius, frame_size, mode='blur', blurreps=10):
+def get_points_in_circle(frameDC, frameSHOW, center, radius, frame_size, mode='blur', blurreps=50):
     # y = np.arange(frame_size[0])
     # x = np.arange(frame_size[1])
     # mask = (x[np.newaxis,:]-center[0])**2 + (y[:,np.newaxis]-center[1])**2 < radius**2

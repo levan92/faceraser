@@ -10,8 +10,8 @@ def in_ellipse(x,y,cx,cy,rx,ry):
     else:
         return False
 
-def noise_face(frame, face_bb, thresh = 0.7, mode='blur',blurreps=20):
-    if face_bb['confidence'] < 0.7:
+def noise_face(frame, face_bb, thresh = 0.5, mode='blur',blurreps=100):
+    if face_bb['confidence'] < thresh:
         return None
 
     rx = int(face_bb['rect']['w']/2)

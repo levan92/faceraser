@@ -21,18 +21,25 @@ parser.add_argument('dir_images', help='Filepath to directory of images to censo
 args = parser.parse_args()
 
 assert os.path.isdir(args.dir_images),'dir given is not a directory!'
-img_paths = []
-for images in os.listdir(args.dir_images):
-    img_paths.append(os.path.join(args.dir_images, images))
-print('{} images in all'.format(len(img_paths)))
 
-folder_name=args.dir_images.split('/')[-1]
 pose = os.path.basename(args.dir_images)
 if not os.path.exists( args.cen_images ):
     os.makedirs( args.cen_images )
 pose_path = os.path.join(args.cen_images, pose)
 if not os.path.exists( pose_path ):
     os.makedirs( pose_path )
+
+existing_censored = list(os.listdir(pose_path))
+
+img_paths = []
+for images in [im for im in os.listdir(args.dir_images) if im not in existing_censored]:
+    img_paths.append(os.path.join(args.dir_images, images))
+total_num = len(img_paths)
+print('{} images in all'.format(total_num))
+
+if total_num <= 0:
+    print('No images to censor. Exiting.')
+    exit()
 
 #faceDet network is loaded after faceReg as gpu usage % cannot be specified for faceDet
 faceDet = FaceDet(threshold=0.1)
@@ -51,7 +58,7 @@ while frame_count < len(img_paths):
     for bb in bbs:
         noise_face(img, bb, thresh = 0.7)
     cv2.destroyWindow(display_title)
-    display_title=show_title+'\t'+folder_name+'\t'+str(frame_count+1)+' of '+str(total_num)
+    display_title=show_title+'\t'+pose+'\t'+str(frame_count+1)+' of '+str(total_num)
     shower.start(display_title)
     shower.show(display_title, img)
     key = cv2.waitKey(0) 

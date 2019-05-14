@@ -92,6 +92,13 @@ def noiser(frame, shower, radius=10):
         elif key == ord('c'):
             res = None
             break
+        elif key == ord('2'):
+            if radius < 100:
+                radius += 5
+        elif key == ord('1'):
+            if radius >= 10:
+                radius -= 5
+
     cv2.destroyWindow(window_name)
     return res
 

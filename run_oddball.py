@@ -57,7 +57,7 @@ while frame_count < len(img_paths):
     bbs = faceDet.detect_bb(img)
     for bb in bbs:
         noise_face(img, bb, thresh = 0.7)
-    cv2.destroyWindow(display_title)
+    # cv2.destroyWindow(display_title)
     display_title=show_title+'\t'+pose+'\t'+str(frame_count+1)+' of '+str(total_num)
     shower.start(display_title)
     shower.show(display_title, img)
@@ -74,6 +74,7 @@ while frame_count < len(img_paths):
     frame_count+=1
     dst_fp = os.path.join( pose_path , os.path.basename(img_path) )
     cv2.imwrite(dst_fp, img)
+    cv2.destroyWindow(display_title)
 
 print('\nuwu... bye bye')
 cv2.destroyAllWindows()

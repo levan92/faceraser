@@ -16,20 +16,17 @@ from faceDet.mobnet import Mobnet_FD as FaceDet
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('dir_images', help='Filepath to folder of images to censor', type=str)
-parser.add_argument('folder_name', help='Folder name of images to censor', type=str)
+parser.add_argument('dir_images', help='Path to directory of images to censor', type=str)
+parser.add_argument('out', help='Path to folder of outputed censored images', type=str)
 args = parser.parse_args()
 
-if args.dir_images[-1]!='/':
-    args.dir_images = args.dir_images+'/'
-
-folder_path = args.dir_images+args.folder_name
-assert os.path.isdir(folder_path),'dir given is not a directory!'
-img_paths = []
-for images in os.listdir(folder_path):
-    img_paths.append(os.path.join(folder_path, images))
+assert os.path.isdir(args.dir_images),'dir given is not a directory!'
+img_paths = [ os.path.join(args.dir_images, n) for n in os.listdir(args.dir_images) ]
 total_num = len(img_paths)
 print('{} images in all'.format(total_num))
+
+if not os.path.exists(args.out):
+    os.makedirs(args.out)
 
 #faceDet network is loaded after faceReg as gpu usage % cannot be specified for faceDet
 faceDet = FaceDet(threshold=0.1)
@@ -40,19 +37,16 @@ display_title=show_title
 shower.start(display_title)
 frame_count = 0
 
-
-if not os.path.exists(args.folder_name):
-    os.makedirs(args.folder_name)
-
 while frame_count < len(img_paths):
     img_path = img_paths[frame_count]
+    img_name = os.path.basename(img_path)
     img = cv2.imread(img_path)
 
     bbs = faceDet.detect_bb(img)
     for bb in bbs:
         noise_face(img, bb, thresh = 0.7)
     cv2.destroyWindow(display_title)
-    display_title=show_title+'\t'+args.folder_name+'\t'+str(frame_count+1)+' of '+str(total_num)
+    display_title=show_title+'\t'+args.dir_images+'\t'+str(frame_count+1)+' of '+str(total_num)
     shower.start(display_title)
     shower.show(display_title, img)
     key = cv2.waitKey(0) 
@@ -66,7 +60,8 @@ while frame_count < len(img_paths):
         continue
     
     frame_count += 1
-    cv2.imwrite('{}/{}.png'.format(args.folder_name,frame_count), img)
+    out_path = os.path.join(args.out, img_name)
+    cv2.imwrite(out_path, img)
 
 print('\nuwu... bye bye')
 cv2.destroyAllWindows()

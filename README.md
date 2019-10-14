@@ -3,7 +3,7 @@ simple python3 tool to erase/censor/anonymise faces
 
 ## Usage
 Quick start:
-`python3 run.py [path to directory of images]`
+`python3 run.py [path to directory of images] [path to output censored images]`
 
 1. Goes through each image in your directory
 2. Face detection is done and face ellipse is censored with random noise
@@ -22,4 +22,7 @@ Quick start:
 ## TODO
 -[ ] sort listdir and introduce cache for returning to progress
 -[ ] back button
+-[ ] progress
+
+-[ ] more gaolat FD modeld
 -[ ] undo auto FD
